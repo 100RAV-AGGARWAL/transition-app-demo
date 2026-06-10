@@ -14,10 +14,7 @@ print(f"----------------------------------\nStarting {settings.app_name} in {set
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        settings.frontend_origin, "http://localhost:3000",
-        "http://localhost:5173", "https://project-libyg.vercel.app/"
-    ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["POST", "GET", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
