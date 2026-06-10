@@ -1,0 +1,22 @@
+flowchart TD
+  A[User opens Transition Portal] --> B[Authenticate and load role]
+  B --> C{Persona}
+  C -->|Staff| D[View property details and own training]
+  C -->|Owner| E[View property details and all staff training]
+  C -->|CMC| F[View assigned properties and first-call queue]
+  C -->|Admin| G[Assign/reassign property to CMC]
+  D --> H[Request follow-up call]
+  E --> H
+  F --> I[Schedule mandatory first call]
+  G --> J[Active CMC assignment updated]
+  J --> K[Future scheduled calls transferred or recreated]
+  H --> L[Find CMC free slots via Outlook]
+  I --> L
+  L --> M[User selects slot]
+  M --> N[Create Zoom meeting]
+  N --> O[Create Outlook calendar event]
+  O --> P[Persist call record]
+  P --> Q[Queue confirmation and reminders]
+  Q --> R[Notification sent by email/SMS]
+  R --> S[Call completed or rescheduled]
+  S --> T[Transition status updated]

@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.python-version
+env/
+.venv/
+venv/
+PYTHONPATH
+
+# Node
+node_modules/
+dist/
+.build/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+pnpm-lock.yaml
+
+# Vite / frontend
+/.vite/
+
+# Environment files
+.env
+.env.*
+
+# IDEs and OS files
+.vscode/
+.DS_Store
+*.swp
+*.swo
+
+# Docker
+docker-compose.override.yml
+
+# Build artifacts
+build/
+coverage/
+reports/
+
+# Misc
+*.sqlite3
+*.db
