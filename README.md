@@ -1,6 +1,6 @@
 # Transition Support Portal POC
 
-This proof of concept implements the requested React + FastAPI + PostgreSQL stack for users moving from an older tool to a new tool. It includes role-based dashboards for property staff/owners, CMCs, and admins, plus mocked Zoom, Outlook, and training integrations.
+This proof of concept implements the requested React + FastAPI + PostgreSQL stack for users moving from an older tool to a new tool. It includes role-based dashboards for property staff/owners, CMCs, and admins, plus mocked Zoom, Outlook, and training integrations...
 
 ## What is included
 
