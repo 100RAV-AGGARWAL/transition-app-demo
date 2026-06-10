@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     app_name: str = "Transition Support Portal"
     environment: str = "local"
     api_prefix: str = "/api"
-    frontend_origin: str = "http://localhost:5173"
+    frontend_origin: str = "https://project-libyg.vercel.app/"
 
     database_url: str = Field(
         default="postgresql+asyncpg://app:app@localhost:5432/transition_portal",

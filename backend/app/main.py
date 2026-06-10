@@ -16,7 +16,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         settings.frontend_origin, "http://localhost:3000",
-        "http://localhost:5173"
+        "http://localhost:5173", "https://project-libyg.vercel.app/"
     ],
     allow_credentials=True,
     allow_methods=["*"],
