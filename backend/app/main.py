@@ -10,6 +10,8 @@ from .settings import get_settings
 settings = get_settings()
 app = FastAPI(title=settings.app_name, version="0.1.0")
 
+print(f"----------------------------------\nStarting {settings.app_name} in {settings.environment} environment and frontend origin {settings.frontend_origin}\n----------------------------------")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
