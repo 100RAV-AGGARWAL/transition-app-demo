@@ -6,6 +6,7 @@ import ChatPage from './pages/ChatPage';
 import CmcDashboard from './pages/CmcDashboard';
 import PropertyDashboard from './pages/PropertyDashboard';
 import OktaAuthButtons from './components/OktaAuthButtons';
+import EmbeddedContext from './components/EmbeddedContext';
 
 export default function App() {
   const [users, setUsers] = useState<User[]>([]);
@@ -45,6 +46,7 @@ export default function App() {
           <span className="profile-name">{selectedUser?.full_name ?? 'Guest'}</span>
           <span className="profile-title">Your Change Management Coach</span>
           <OktaAuthButtons />
+          <EmbeddedContext />
         </div>
       </header>
 
