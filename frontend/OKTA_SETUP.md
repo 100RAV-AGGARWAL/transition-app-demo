@@ -16,3 +16,7 @@ npm run dev
 Notes:
 - The app uses `@okta/okta-react` and `@okta/okta-auth-js` and mounts a `/implicit/callback` route to handle the OAuth redirect.
 - API requests include the Okta access token in the `Authorization` header when available.
+ 
+Deployment note (Vercel):
+- If deploying to Vercel, add a `vercel.json` rewrite so the SPA callback path is served by `index.html` (example `vercel.json` is present at project root). Without this you will see a 404 on `/implicit/callback` because Vercel serves static files by path.
+
