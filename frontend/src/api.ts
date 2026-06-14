@@ -10,6 +10,8 @@ import type {
   AdminDashboard,
 } from "./types";
 
+import oktaAuth from './oktaAuth';
+
 const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "/api";
 
 export async function apiFetch<T>(
@@ -20,6 +22,22 @@ export async function apiFetch<T>(
   const headers = new Headers(init.headers);
   headers.set("Content-Type", "application/json");
   if (userId) headers.set("X-User-Id", userId);
+  // Attach access token if present
+  try {
+    const token = await oktaAuth.tokenManager.get('accessToken') as unknown;
+    const maybeToken = token as { accessToken?: string; access_token?: string } | string | null | undefined;
+    const access =
+      (typeof maybeToken === 'object' && maybeToken !== null
+        ? maybeToken.accessToken ?? maybeToken.access_token
+        : typeof maybeToken === 'string'
+          ? maybeToken
+          : undefined);
+    if (access) {
+      headers.set('Authorization', `Bearer ${access}`);
+    }
+  } catch (e) {
+    // ignore if no token
+  }
   const response = await fetch(`${API_BASE}${path}`, { ...init, headers });
   if (!response.ok) {
     const body = await response.json().catch(() => ({}));

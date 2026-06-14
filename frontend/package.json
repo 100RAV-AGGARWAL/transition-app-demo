@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
+    "@okta/okta-auth-js": "^7.3.0",
+    "@okta/okta-react": "^6.3.0",
+    "react-router-dom": "^6.14.1",
     "react": "latest",
     "react-dom": "latest",
     "typescript": "latest",

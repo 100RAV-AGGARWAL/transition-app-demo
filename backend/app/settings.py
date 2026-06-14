@@ -19,6 +19,10 @@ class Settings(BaseSettings):
     # Development auth is header based. Replace with Cognito, Entra ID, Okta, or Auth0 in production.
     dev_auth_enabled: bool = True
 
+    # Okta / OIDC settings for production token validation
+    okta_issuer: str | None = None
+    okta_client_id: str | None = None
+
     mock_integrations: bool = True
     default_timezone: str = "Asia/Kolkata"
     slot_interval_minutes: int = 30

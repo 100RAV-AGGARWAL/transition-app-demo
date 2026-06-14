@@ -5,6 +5,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import ChatPage from './pages/ChatPage';
 import CmcDashboard from './pages/CmcDashboard';
 import PropertyDashboard from './pages/PropertyDashboard';
+import OktaAuthButtons from './components/OktaAuthButtons';
 
 export default function App() {
   const [users, setUsers] = useState<User[]>([]);
@@ -43,6 +44,7 @@ export default function App() {
         <div className="profile-panel">
           <span className="profile-name">{selectedUser?.full_name ?? 'Guest'}</span>
           <span className="profile-title">Your Change Management Coach</span>
+          <OktaAuthButtons />
         </div>
       </header>
 
