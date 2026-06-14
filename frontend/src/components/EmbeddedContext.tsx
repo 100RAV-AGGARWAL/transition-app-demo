@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import oktaAuth from '../oktaAuth';
 
 type SfContext = {
     [key: string]: any;
@@ -15,11 +16,58 @@ export default function EmbeddedContext() {
 
             const data = event.data;
             if (!data) return;
-
-            // Expect a simple envelope: { type: 'SALESFORCE_CONTEXT', payload: { ... } }
+            // Expect envelopes:
+            // { type: 'SALESFORCE_CONTEXT', payload: { ... } }
+            // { type: 'SALESFORCE_OKTA_TOKEN', payload: { accessToken, idToken?, expiresAtSeconds?, scope? } }
             if (typeof data === 'object' && data.type === 'SALESFORCE_CONTEXT') {
                 setContext(data.payload ?? null);
                 setOrigin(event.origin);
+            }
+
+            if (typeof data === 'object' && data.type === 'SALESFORCE_OKTA_TOKEN') {
+                const payload = data.payload ?? {};
+                const at = payload.accessToken;
+                if (at) {
+                    const expiresAt = payload.expiresAtSeconds ?? Math.floor(Date.now() / 1000) + (payload.expiresInSeconds ?? 3600);
+                    const tokenObj: any = {
+                        accessToken: at,
+                        expiresAt,
+                        scope: payload.scope ?? 'openid profile email',
+                        tokenType: payload.tokenType ?? 'Bearer',
+                    };
+                    // store token in okta auth tokenManager for API usage
+                    try {
+                        // tokenManager.add may require any-typed input depending on library version
+                        // @ts-ignore
+                        oktaAuth.tokenManager.add('accessToken', tokenObj);
+                    } catch (e) {
+                        try {
+                            // fallback: set directly
+                            // @ts-ignore
+                            oktaAuth.tokenManager.set('accessToken', tokenObj);
+                        } catch (e2) {
+                            // ignore
+                        }
+                    }
+                }
+
+                // optionally register id token
+                if (payload.idToken) {
+                    const idt: any = { idToken: payload.idToken, expiresAt: payload.idTokenExpiresAtSeconds ?? Math.floor(Date.now() / 1000) + 3600 };
+                    try {
+                        // @ts-ignore
+                        oktaAuth.tokenManager.add('idToken', idt);
+                    } catch (e) {
+                        try {
+                            // @ts-ignore
+                            oktaAuth.tokenManager.set('idToken', idt);
+                        } catch (e2) {
+                            // ignore
+                        }
+                    }
+                }
+                // reflect token presence in UI by storing a minimal context entry
+                setContext((prev) => ({ ...(prev ?? {}), __okta_token_loaded: true, __okta_expires_at: payload.expiresAtSeconds }));
             }
         }
 
